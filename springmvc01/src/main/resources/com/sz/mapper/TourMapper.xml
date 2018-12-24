@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.sz.mapper.TourMapper">
+    <resultMap id="tour" type="com.sz.pojo.Tour">
+        <id property="id" column="id"/>
+        <result property="tourCityId" column="tourCityId"/>
+        <result property="tourPlace" column="tourPlace"/>
+        <result property="tourTime" column="tourTime"/>
+        <result property="tourNote" column="tourNote"/>
+        <association property="tc" javaType="com.sz.pojo.Tour_cityId">
+            <id property="id" column="id"/>
+            <result property="cityName" column="cityName"/>
+        </association>
+    </resultMap>
+    <insert id="add">
+        INSERT tour(tourCity,tourPlace,tourTime,tourNote)
+        value (#{tourCity},#{tourPlace},#{tourTime},#{tourNote})
+
+    </insert>
+    <select id="selectAll" resultMap="tour">
+      SELECT t.id,cityName,tourPlace,tourTime,tourNote FROM tour t ,tour_cityId c WHERE c.id=t.`id`
+    </select>
+</mapper>
